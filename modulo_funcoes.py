@@ -53,7 +53,7 @@ def open_db(tabnamePass, tabnameRes, tabnameVoos)->dict :
                 'destino' : voos[3],
                 'datapda' : voos[4],
                 'datache' : voos[5],
-                'vagas' : voos[6]
+                'vagas' : int(voos[6])
             })
             line = wo.readline()
 
@@ -111,6 +111,13 @@ def passExiste(bd, idpass)->bool:
     return False
 
 
+
+
+
+
+
+
+
 """
 Esta função retorna o bd (obtido da função open_bd), e reescreve os arquivos em formato json
 EX: arq passageiros -> {
@@ -129,7 +136,7 @@ def salva_bd(bd, tabnamePass, tabnameRes, tabnameVoos):
     with open(tabnameVoos, 'wt', encoding='utf-8') as wo:
         json.dump({"voos" : bd["voos"]},wo,indent=4,ensure_ascii=False)
         
-        return True
+    return True
 
 
 
@@ -218,6 +225,23 @@ def adReserva(bd, idres, data, status, assento, idpass, idvoo):
 """
 Adiciona um novo voo, se já não existir um voo com o respectivo ID
 """
-def adVoo(bd, idvoo, numvoo, origem, destino, dtpartida, dtchegada):
+def adVoo(bd, idvoo, numvoo, origem, destino, dtpartida, dtchegada, vagas):
 
-    return None
+    for voo in bd["voos"]: 
+        if voo["numvoo"] == numvoo: #verifica se já existe um voo com aquele número
+            return bd
+
+    if (vooExiste(bd, idvoo) == False): #se o voo não existir e o número do voo for único
+        voo = {
+            "id": idvoo,
+            "numvoo": numvoo,
+            "origem": origem,
+            "destino": destino,
+            "datapda": dtpartida,
+            "datache": dtchegada,
+            "vagas": vagas
+        }
+        bd["voos"].append(voo) #registra o novo voo
+        return bd
+
+    return bd
