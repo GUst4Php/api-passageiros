@@ -252,7 +252,7 @@ def adVoo(bd, idvoo, numvoo, origem, destino, dtpartida, dtchegada, vagas):
 """
 Esta função tem como objetivo retornar o passageiro do banco de dados, cujo o id corresponda
 """
-def get Passageiro(bd, id):
+def getPassageiro(bd, id):
 
     if passExiste(bd, id): #se passageiro existir
         for passageiro in bd["passageiros"]: 
@@ -264,7 +264,8 @@ def get Passageiro(bd, id):
 
 """
 Esta função tem como objetivo retornar o passageiro do banco de dados, cujo o id corresponda
-"""
+""" 
+
 def getVoo(bd, id):
 
     if vooExiste(bd, id):
@@ -284,6 +285,71 @@ def getReserva(bd, idres):
             if reserva["id"] ==  idres:
                 return reserva
     return None
+
+"""
+Esta função verifica se o assento está livre em um determinado voo
+Retorna:
+True - Assento livre
+False - Assento ocupado
+"""
+
+
+def assentoLivre(bd, idvoo, assento):
+    if vooExiste(bd, idvoo):
+        for reserva in bd["reservas"]:
+            if (reserva["idvoo"] == idvoo) and (reserva["assento"] == assento) and (reserva["status"] == "Confirmada"):
+                return False #assento ocupado
+            
+        return True #assento livre
+    
+    return False  #Voo não existe
+
+
+
+"""
+Todas as funçoes a baixo são referentes a printar as funcionalidades do banco de dados e realização das atividades
+"""
+
+def printarTab(): #Função para printar as funcionalidades do banco de dados
+    tabela = {1 : "Reservas", 2 : "Passageiros", 3 : "Voos", 4 : "salvar banco de dados", 5 : "sair"}
+
+    txt = "Escolha as atividades que deseja executar:\n"
+
+    for key in tabela:  
+        txt += "|-" + "-" *43 + "-|\n"
+        txt += "| {:^10} - {:^30} |\n".format(key, tabela[key])
+        txt += "|-"  + "-" *43 + "-|\n"
+
+    return txt
+
+
+def printarTabPassageiros():
+    tabela = {1 : "Verificar se o passageiro existe", 2 : "consultar dados dos passageiros", 3 : "Adicionar passageiro", 4 : "Listar todos os passageiros", 5 : "Voltar ao menu principal"}
+
+    txt = "Escolha as atividades que deseja executar:\n"
+    
+    for key in tabela:  
+        txt += "|-" + "-" *43 + "-|\n"
+        txt += "| {:^10} - {:^30} |\n".format(key, tabela[key])
+        txt += "|-"  + "-" *43 + "-|\n"
+    
+    return txt
+
+def printarPassageiros(bd):
+    txt = "Lista de passageiros cadastrados:\n"
+    txt += "|-" + "-" *60 + "-|\n"
+    txt += "| {:^10} | {:^20} | {:^20} | {:^10} |\n".format("ID", "Nome", "Email", "Telefone")
+    txt += "|-" + "-" *60 + "-|\n"
+
+    for passageiro in bd["passageiros"]:
+        txt += "| {:^10} | {:^20} | {:^20} | {:^10} |\n".format(passageiro["id"], passageiro["nome"], passageiro["email"], passageiro["tel"])
+        txt += "|-" + "-" *60 + "-|\n"
+
+    return txt
+
+
+    
+
 
 
 
