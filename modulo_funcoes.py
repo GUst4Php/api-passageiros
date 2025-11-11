@@ -177,10 +177,9 @@ def adReserva(bd, idres, data, status, assento, idpass, idvoo):
     voo_encontrado = None
 
     # Verifica se o passageiro existe
-    for passageiro in bd["passageiros"]:
-        if passageiro["id"] == idpass:
-            passageiro_existe = True
-    if passageiro_existe == False:
+    if passExiste(bd, idpass):
+        passageiro_existe == True
+    else:
         return 1  #passageiro não existe
 
     # Verifica se o voo existe
@@ -193,7 +192,7 @@ def adReserva(bd, idres, data, status, assento, idpass, idvoo):
     # Verifica duplicidade e conta vagas ocupadas
     for reserva in bd["reservas"]:
         if reserva["id"] == idres:
-            return bd #reserva já existe com esse id, nenhuma alteração
+            return 0 #reserva já existe com esse id, nenhuma alteração
         if reserva["status"] == "Confirmada" and reserva["idvoo"] == idvoo:
             cont_vagas += 1
             if reserva["assento"] == assento:
@@ -218,7 +217,7 @@ def adReserva(bd, idres, data, status, assento, idpass, idvoo):
     }
     bd["reservas"].append(reserva)
 
-    return bd  #Alterado com sucesso
+    return 0  #Alterado com sucesso
 
 
 
