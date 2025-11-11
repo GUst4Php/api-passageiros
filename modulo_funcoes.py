@@ -192,7 +192,7 @@ def adReserva(bd, idres, data, status, assento, idpass, idvoo):
     # Verifica duplicidade e conta vagas ocupadas
     for reserva in bd["reservas"]:
         if reserva["id"] == idres:
-            return 0 #reserva já existe com esse id, nenhuma alteração
+            return 5 #reserva já existe com esse id, nenhuma alteração
         if reserva["status"] == "Confirmada" and reserva["idvoo"] == idvoo:
             cont_vagas += 1
             if reserva["assento"] == assento:
