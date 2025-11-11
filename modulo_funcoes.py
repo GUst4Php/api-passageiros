@@ -5,7 +5,7 @@ reservas e voos, ela retorna uma lista de dicionarios, que serão utilizados pel
 salva_bd em formato json"""
 
 """
-EX: {passageiros : [id, nome, email, talz], reservas : [id, voo, assento, talz]...}
+EX: {passageiros : [{"id": "1", "nome": "fulano", "email": "fulano@gmail.com" ...} , {}], reservas : [id, voo, assento, talz]...}
 """
 
 def open_db(tabnamePass, tabnameRes, tabnameVoos)->dict :
@@ -110,12 +110,13 @@ def passExiste(bd, idpass)->bool:
 
     return False
 
+def resExiste(bd, idres):
 
+    for reserva in bd["reservas"]:
+        if reserva["id"] == idres:
+            return True
 
-
-
-
-
+    return False
 
 
 """
@@ -168,6 +169,7 @@ caso contrário retorna:
 2 - voo não existe
 3 - existe mas sem vaga
 4 - existe, tem vaga, mas assento está ocupado
+5 - ja exista reserva com este id
 """
 
 def adReserva(bd, idres, data, status, assento, idpass, idvoo):
@@ -244,3 +246,46 @@ def adVoo(bd, idvoo, numvoo, origem, destino, dtpartida, dtchegada, vagas):
         return bd
 
     return bd
+
+
+
+"""
+Esta função tem como objetivo retornar o passageiro do banco de dados, cujo o id corresponda
+"""
+def get Passageiro(bd, id):
+
+    if passExiste(bd, id): #se passageiro existir
+        for passageiro in bd["passageiros"]: 
+            if passageiro["id"] == id: #pegando o passageiro correspondente ao do ID
+                return passageiro
+    return None
+
+
+
+"""
+Esta função tem como objetivo retornar o passageiro do banco de dados, cujo o id corresponda
+"""
+def getVoo(bd, id):
+
+    if vooExiste(bd, id):
+        for voo in bd["voos"]:
+            if voo["id"] == id:
+                return voo
+    return None
+
+
+"""
+Esta função tem como objetivo retornar a reserva do banco de dados, cujo o id corresponda
+"""
+def getReserva(bd, idres):
+
+    if resExiste(bd, idres):
+        for reserva in bd["reservas"]:
+            if reserva["id"] ==  idres:
+                return reserva
+    return None
+
+
+
+
+
