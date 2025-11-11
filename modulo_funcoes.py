@@ -348,6 +348,19 @@ def printarPassageiros(bd):
     return txt
 
 
+def printarTabVoo():
+    
+    tabela = {1: "Verificar se Voo Existe", 2: "Quantidades de vagas no Voo", 3: "Adicionar Voo", 4: "Dados de um Voo"}
+
+    for key in tabela:
+        txt += "|-" + "-" *43 + "-|\n"
+        txt += "| {:^10} - {:^30} |\n".format(key, tabela[key])
+        txt += "|-"  + "-" *43 + "-|\n"
+
+    return txt
+
+
+
     
 
 

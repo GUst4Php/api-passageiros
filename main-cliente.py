@@ -53,6 +53,16 @@ def main():
                 print("Encerrando atividades relacionadas a passageiros.")
                 continue
 
+        if categoria == 3:
+            print("Atividades relacionadas a Voo:")
+            print(serv_api.printarTabVoo())
+            servicos = int(input("Digite o número do serviço que deseja realizar: "))
+            
+            
+
+
+        if categoria == 5:
+            break
 
 
             

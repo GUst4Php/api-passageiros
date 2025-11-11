@@ -41,6 +41,9 @@ def printarTabPassageiros(): #Função para printar tabela de funcionalidades de
 def printarPassageiros(): #Função para printar tabela de passageiros
     return mf.printarPassageiros(bd)
 
+def printarTabVoo():
+    return mf.printarTabVoo()
+
  # ======== Fim das funções da API de reservas ========
 
 
@@ -69,6 +72,7 @@ def main():
     server.register_function(printarTab, "printarTab")
     server.register_function(printarTabPassageiros, "printarTabPassageiros")
     server.register_function(printarPassageiros, "printarPassageiros")
+    server.register_function(printarTabVoo, "printarTabVoo")
 
     print("Servidor aguardando requisições...")
 
