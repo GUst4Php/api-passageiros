@@ -2,6 +2,9 @@ from xmlrpc.server import SimpleXMLRPCServer
 import modulo_funcoes as mf
 
  # ======== Funções da API de reservas ========
+def salva_bd(): #Salva o banco de dados em arquivos
+    return mf.salva_bd(bd, arq_i_pass, arq_i_res, arq_i_voos)
+
 def adPassageiro(idpass, nome, email, fone): #Adiciona passageiro
     return mf.adPassageiro(bd, idpass, nome, email, fone)
 
@@ -44,6 +47,12 @@ def printarPassageiros(): #Função para printar tabela de passageiros
 def printarTabVoo():
     return mf.printarTabVoo()
 
+def printarPassageiro(idpass):
+    return mf.printarPassageiro(bd, idpass)
+
+def printarVoo(idvoo):
+    return mf.printarVoo(bd, idvoo)
+
  # ======== Fim das funções da API de reservas ========
 
 
@@ -51,12 +60,13 @@ def printarTabVoo():
 
 def main():
     # Arquivos de entrada
+    global arq_i_pass, arq_i_res, arq_i_voos
     arq_i_pass = "Material para o trabalho avaliação 2/tabpassageiros.txt"
     arq_i_res = "Material para o trabalho avaliação 2/tabreservas.txt"
     arq_i_voos = "Material para o trabalho avaliação 2/tabvoos.txt"
 
     #configurando o serv
-    server = SimpleXMLRPCServer(("localhost", 8000))
+    server = SimpleXMLRPCServer(("localhost", 8080))
 
     #Definindo as funções que serão disponibilizadas pelo servidor
     server.register_function(adPassageiro, "adPassageiro")
@@ -73,7 +83,11 @@ def main():
     server.register_function(printarTabPassageiros, "printarTabPassageiros")
     server.register_function(printarPassageiros, "printarPassageiros")
     server.register_function(printarTabVoo, "printarTabVoo")
+    server.register_function(salva_bd, "salvar_db")
+    server.register_function(printarPassageiro, "printarPassageiro")
+    server.register_function(printarVoo, "printarVoo")
 
+    
     print("Servidor aguardando requisições...")
 
     #carregando o banco de dados

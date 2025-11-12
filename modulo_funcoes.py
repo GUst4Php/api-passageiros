@@ -258,6 +258,7 @@ def getPassageiro(bd, id):
         for passageiro in bd["passageiros"]: 
             if passageiro["id"] == id: #pegando o passageiro correspondente ao do ID
                 return passageiro
+            
     return None
 
 
@@ -329,21 +330,21 @@ def printarTabPassageiros():
     txt = "Escolha as atividades que deseja executar:\n"
     
     for key in tabela:  
-        txt += "|-" + "-" *43 + "-|\n"
-        txt += "| {:^10} - {:^30} |\n".format(key, tabela[key])
-        txt += "|-"  + "-" *43 + "-|\n"
+        txt += "|-" + "-" *48 + "-|\n"
+        txt += "| {:^10} - {:^35} |\n".format(key, tabela[key])
+        txt += "|-"  + "-" *48 + "-|\n"
     
     return txt
 
 def printarPassageiros(bd):
     txt = "Lista de passageiros cadastrados:\n"
-    txt += "|-" + "-" *60 + "-|\n"
-    txt += "| {:^10} | {:^20} | {:^20} | {:^10} |\n".format("ID", "Nome", "Email", "Telefone")
-    txt += "|-" + "-" *60 + "-|\n"
+    txt += "|-" + "-" *94 + "-|\n"
+    txt += "| {:^10} | {:^20} | {:^30} | {:^25} |\n".format("ID", "Nome", "Email", "Telefone")
+    txt += "|-" + "-" *94 + "-|\n"
 
     for passageiro in bd["passageiros"]:
-        txt += "| {:^10} | {:^20} | {:^20} | {:^10} |\n".format(passageiro["id"], passageiro["nome"], passageiro["email"], passageiro["tel"])
-        txt += "|-" + "-" *60 + "-|\n"
+        txt += "| {:^10} | {:^20} | {:^30} | {:^25} |\n".format(passageiro["id"], passageiro["nome"], passageiro["email"], passageiro["tel"])
+        txt += "|-" + "-" *94 + "-|\n"
 
     return txt
 
@@ -352,14 +353,52 @@ def printarTabVoo():
     
     tabela = {1: "Verificar se Voo Existe", 2: "Quantidades de vagas no Voo", 3: "Adicionar Voo", 4: "Dados de um Voo"}
 
+    txt = "Escolha as atividades que deseja executar:\n"
     for key in tabela:
-        txt += "|-" + "-" *43 + "-|\n"
-        txt += "| {:^10} - {:^30} |\n".format(key, tabela[key])
-        txt += "|-"  + "-" *43 + "-|\n"
+        txt += "|-" + "-" *53 + "-|\n"
+        txt += "| {:^10} - {:^40} |\n".format(key, tabela[key])
+        txt += "|-"  + "-" *53 + "-|\n"
+
+    return txt
+
+def printarVoo(bd,idvoo):
+
+    voo = getVoo(bd, idvoo)
+
+    txt = "Dados do voo:\n"
+    txt += "|-" + "-" *80 + "-|\n"
+    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^10} | {:^10} | {:^5} |\n".format("ID", "Número do Voo", "Origem", "Destino", "Partida", "Chegada", "Vagas")
+    txt += "|-" + "-" *80 + "-|\n"
+    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^10} | {:^10} | {:^5} |\n".format(voo["id"], voo["numvoo"], voo["origem"], voo["destino"], voo["datapda"], voo["datache"], voo["vagas"])
+    txt += "|-" + "-" *80 + "-|\n"
 
     return txt
 
 
+def printarPassageiro(bd,idpass):
+
+    passageiro = getPassageiro(bd, idpass)
+
+    txt = "Dados do passageiro:\n"
+    txt += "|-" + "-" *84 + "-|\n"
+    txt += "| {:^10} | {:^20} | {:^25} | {:^20} |\n".format("ID", "Nome", "Email", "Telefone")
+    txt += "|-" + "-" *84 + "-|\n"
+    txt += "| {:^10} | {:^20} | {:^25} | {:^20} |\n".format(passageiro["id"], passageiro["nome"], passageiro["email"], passageiro["tel"])
+    txt += "|-" + "-" *84 + "-|\n"
+
+    return txt
+
+def printarVoo(bd,idvoo):
+
+    voo = getVoo(bd, idvoo)
+
+    txt = "|-" + "-" *123 + "-|\n"
+    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format("ID", "Número do Voo", "Origem", "Destino", "Partida", "Chegada", "Vagas")
+    txt += "|-" + "-" *123 + "-|\n"
+    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format(voo["id"], voo["numvoo"], voo["origem"], voo["destino"], voo["datapda"], voo["datache"], voo["vagas"])
+    txt += "|-" + "-" *123 + "-|\n"
+
+    return txt
 
     
 
