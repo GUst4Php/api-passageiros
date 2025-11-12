@@ -87,6 +87,15 @@ def main():
                     print("")
 
                 print("")
+
+            if servicos == 3: #listar todas as reservas
+                print("")
+                print(serv_api.printarReservas())
+                print("")
+
+            if servicos == 4:
+                print("--Encerrando atividades relacionadas a reservas.--")
+                continue
         if categoria == 2: #atividades relacionadas a passageiros
             print("--Atividades relacionadas a passageiros: --")
             print("")

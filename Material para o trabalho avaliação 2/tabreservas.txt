@@ -1,5 +1,44 @@
-1,2025-11-10,Confirmada,12A,1,101
-2,2025-11-11,Pendente,7C,2,101
-3,2025-11-12,Cancelada,14B,3,101
-4,2025-11-13,Confirmada,21D,4,101
-5,2025-11-14,Confirmada,3F,5,101
+{
+    "reservas": [
+        {
+            "id": "1",
+            "data": "2025-11-10",
+            "status": "Confirmada",
+            "assento": "12A",
+            "idpass": "1",
+            "idvoo": "101"
+        },
+        {
+            "id": "2",
+            "data": "2025-11-11",
+            "status": "Pendente",
+            "assento": "7C",
+            "idpass": "2",
+            "idvoo": "101"
+        },
+        {
+            "id": "3",
+            "data": "2025-11-12",
+            "status": "Cancelada",
+            "assento": "14B",
+            "idpass": "3",
+            "idvoo": "101"
+        },
+        {
+            "id": "4",
+            "data": "2025-11-13",
+            "status": "Confirmada",
+            "assento": "21D",
+            "idpass": "4",
+            "idvoo": "101"
+        },
+        {
+            "id": "5",
+            "data": "2025-11-14",
+            "status": "Confirmada",
+            "assento": "3F",
+            "idpass": "5",
+            "idvoo": "101"
+        }
+    ]
+}

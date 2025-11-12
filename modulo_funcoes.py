@@ -406,7 +406,7 @@ def printarPassageiro(bd,idpass):
 
 def printarTabReservas():
 
-    tabela = {1 : "consultar dados da reserva", 2 : "Adicionar reserva", 3 : "Voltar ao menu principal"}
+    tabela = {1 : "consultar dados da reserva", 2 : "Adicionar reserva", 3 : "Listar todas as reservas", 4 : "Voltar ao menu principal"}
 
     txt = "Escolha as atividades que deseja executar:\n"
     
@@ -464,6 +464,17 @@ def printarVoos(bd):
         txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^5} |\n".format(voo["id"], voo["numvoo"], voo["origem"], voo["destino"], voo["datapda"], voo["datache"], voo["vagas"])
         txt += "|-" + "-" *118 + "-|\n"
 
+    return txt
+
+def printarReservas(bd):
+
+    txt = "Lista de reservas cadastradas:\n"
+    txt += "|-" + "-" *110 + "-|\n"
+    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} |\n".format("ID", "DATA", "STATUS", "ASSENTO", "IDPASS", "IDVOO")
+    txt += "|-" + "-" *110 + "-|\n"
+    for reserva in bd["reservas"]:
+        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} |\n".format(reserva["id"], reserva["data"], reserva["status"], reserva["assento"], reserva["idpass"], reserva["idvoo"])
+        txt += "|-" + "-" *110+ "-|\n"
     return txt
 
 
