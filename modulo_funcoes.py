@@ -435,7 +435,7 @@ def printarReserva(bd,idres):
 def printarAssentosVoo(bd, idvoo):
     fileiras = ['A', 'B', 'C', 'D', 'E', 'F']
     linhas = 25
-    txt = "Mapa de assentos do voo (vertical):\n\n"
+    txt = "Mapa de assentos do voo :\n\n"
 
     txt += "     "  
     for num in range(1, linhas + 1):
