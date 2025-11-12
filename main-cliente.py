@@ -1,4 +1,5 @@
 from xmlrpc.client import ServerProxy
+import os #Utlilizado para limpar a tela
 
 def main():
 
@@ -24,10 +25,12 @@ def main():
 
     while categoria != 0:
 
+        print("")
         print(serv_api.printarTab())
         print("")
         categoria = int(input("Digite o numero da atvidade que deseja realizar: "))
         print("")
+        os.system('clear')
 
         if categoria == 1: #atividades relacionadas a reservas
             print("--Atividades relacionadas a reservas: --")
@@ -49,9 +52,40 @@ def main():
                     print("")
             if servicos == 2:
                 print("")
-                print(serv_api.printarAssentosVoo(str(input("Digite o ID do voo para o qual deseja fazer a reserva: "))))
+                voo = str(input("Digite o ID do voo que deseja fazer a reserva:"))
+                if serv_api.vooExiste(voo) == False:
+                    print("")
+                    print("--Voo não encontrado. Verifique o ID e tente novamente.--")
+                    continue
                 print("")
-                resposta = serv_api.adReserva(str(input("Digite o ID da reserva: ")), str(input("Data e Hora de Embarque: ")), str(input("Status da Reserva: ")), str(input("Digite o assento desejado (Exemplo: 12A): ")),str(input("Digite o ID do passageiro")), str(input("Digite o ID do voo: ")))
+                print(serv_api.printarAssentosVoo(voo))
+                print("")
+                reserva = str(input("Digite o ID da reserva: "))
+                dta = str(input("Data e Hora de Embarque: "))
+                status = str(input("Status da Reserva: "))
+                assento = str(input("Digite o assento desejado (Exemplo: 12A): ").upper())
+                id_passageiro = str(input("Digite o ID do passageiro: "))
+                print("")
+                resposta = serv_api.adReserva(reserva, dta, status, assento, id_passageiro, voo)
+                if resposta == 0:
+                    print("--Reserva adicionada com sucesso!--")
+                    print("")
+                elif resposta == 1:
+                    print("--Erro ao adicionar reserva: Passageiro não encontrado.--")
+                    print("")
+                elif resposta == 2:
+                    print("--Erro ao adicionar reserva: Voo não encontrado.--")
+                    print("")
+                elif resposta == 3:
+                    print("--Erro ao adicionar reserva: Voo não possui vagas.--")
+                    print("")
+                elif resposta == 4:
+                    print("--Erro ao adicionar reserva: Assento já está ocupado.--")
+                    print("")
+                elif resposta == 5:
+                    print("--Erro ao adicionar reserva: Duplicidade de reserva com o ID.--")
+                    print("")
+
                 print("")
         if categoria == 2: #atividades relacionadas a passageiros
             print("--Atividades relacionadas a passageiros: --")
@@ -74,7 +108,16 @@ def main():
 
             if servicos == 2: #adicionar passageiro
                 print("")
-                resposta = serv_api.adPassageiro(str(input("Digite o ID do passageiro: ")), str(input("Digite o nome do passageiro: ")), str(input("Digite o email do passageiro: ")), str(input("Digite o telefone do passageiro: ")))
+                id = str(input("Digite o ID do passageiro: "))
+                if serv_api.passExiste(id) == True:
+                    print("--Erro ao adicionar passageiro: Passageiro com ID já existente.--")
+                    print("")
+                    continue
+                nome = str(input("Digite o nome do passageiro: "))
+                email = str(input("Digite o email do passageiro: "))
+                fone = str(input("Digite o telefone do passageiro: "))
+
+                resposta = serv_api.adPassageiro(id, nome, email, fone)
                 print("")
                 if resposta:
                     print("--Passageiro adicionado com sucesso!--")
@@ -98,23 +141,29 @@ def main():
             print(serv_api.printarTabVoo())
             print("")
             servicos = int(input("Digite o número do serviço que deseja realizar: "))
-            if servicos == 1: #verificar se voo existe
-                resposta = serv_api.vooExiste(str(input("Digite o ID do voo que deseja verificar: ")))
-                if resposta:
+
+            if servicos == 1: #Dados do voo
+                print("")
+                resposta = serv_api.printarVoo(str(input("Digite o ID do voo que deseja consultar os dados:  ")))
+                if resposta != None:
                     print("")
-                    print("--O voo existe no sistema.--")
+                    print("--Dados do voo:--")  
+                    print(resposta)
                     print("")
                 else:
                     print("")
-                    print("--O voo não existe no sistema.--")
+                    print("--Voo não encontrado. Verifique o ID e tente novamente.--")
                     print("")
-
-            if servicos == 2: #quantidade de vagas no voo
-                print("")
-                resposta = serv_api.vagasVoo(str(input("Digite o ID do voo que deseja consultar as vagas:  ")))
-                print("")
-                print(f"--O voo possui {resposta} vagas disponíveis.-- \n")
-                print("")
+            if servicos == 2: #Vagas disponíveis
+                resposta = serv_api.vagasVoo(str(input("Digite o ID do voo que deseja consultar as vagas disponíveis: ")))
+                if resposta != None:
+                    print("")
+                    print(f"--Número de vagas disponíveis no voo: {resposta}--")
+                    print("")
+                else:
+                    print("")
+                    print("--Voo não encontrado. Verifique o ID e tente novamente.--")
+                    print("")
             
             if servicos == 3: #adicionar voo
                 resposta = serv_api.adVoo(str(input("Digite o ID do voo: ")),str(input("Digite o Número de voo: ")), str(input("Digite a origem do voo: ")), str(input("Digite o destino do voo: ")), str(input("Data de partida do Voo: ")),str(input("Data de chegada do Voo: ")), str(input("Digite a quantidade de vagas voo: ")))
@@ -126,7 +175,7 @@ def main():
                     print("")
                     print("--Erro ao adicionar voo. Verifique os dados e tente novamente.--")
                     print("")
-            if servicos == 4: #dados de um voo
+            if servicos == 3: #dados de um voo
                 resposta = serv_api.printarVoo(str(input("Digite o ID do voo que deseja consultar: ")))
                 if resposta != None:
                     print("")
@@ -136,18 +185,23 @@ def main():
                 else:
                     print("--Voo não encontrado. Verifique o ID e tente novamente.--")
 
+            if servicos == 4: #listar todos os voos
+                print("")
+                print(serv_api.printarVoos())
+                print("")
+            if servicos == 5: #voltar ao menu principal
+                print("")
+                print("--Encerrando atividades relacionadas a voos.--")
+                print("")
+                continue
+
         if categoria == 4:
             serv_api.salvar_db()
             print("")
             print("--Banco de dados salvo com sucesso!--")
             print("")
-            continue
-            
-
-        if categoria == 5:
-            serv_api.salvar_db()
             break
-
+            
 
 if __name__ == "__main__":
     main()

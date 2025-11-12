@@ -92,7 +92,7 @@ def vagasVoo(bd, idvoo):
             if voo["vagas"] >= cont_assentos: #verifica se há vagas livres
                 return voo["vagas"] - cont_assentos #retorna a quantidade de vagas livres, mesmo que seja 0
 
-    return -1 #Voo não existe
+    return None #Voo não existe
                 
 
 
@@ -274,6 +274,7 @@ def getVoo(bd, id):
         for voo in bd["voos"]:
             if voo["id"] == id:
                 return voo
+            
     return None
 
 
@@ -321,7 +322,7 @@ Todas as funçoes a baixo são referentes a printar as funcionalidades do banco 
 """
 
 def printarTab(): #Função para printar as funcionalidades do banco de dados
-    tabela = {1 : "Reservas", 2 : "Passageiros", 3 : "Voos", 4 : "salvar banco de dados", 5 : "sair"}
+    tabela = {1 : "Reservas", 2 : "Passageiros", 3 : "Voos", 4 : "sair"}
 
     txt = "Escolha as atividades que deseja executar:\n"
 
@@ -360,7 +361,7 @@ def printarPassageiros(bd):
 
 def printarTabVoo():
     
-    tabela = {1: "Verificar se Voo Existe", 2: "Quantidades de vagas no Voo", 3: "Adicionar Voo", 4: "Dados de um Voo"}
+    tabela = {1: "Dados de um Voo", 2: "Quantidades de vagas no Voo", 3: "Adicionar Voo", 4 : "Listar todos os Voos", 5: "Voltar ao menu principal"}
 
     txt = "Escolha as atividades que deseja executar:\n"
     for key in tabela:
@@ -372,17 +373,19 @@ def printarTabVoo():
 
 def printarVoo(bd,idvoo):
 
-    voo = getVoo(bd, idvoo)
+    if vooExiste(bd, idvoo) == True:
+    
+        voo = getVoo(bd, idvoo)
+        txt = "\n"
+        txt += "|-" + "-" *118 + "-|\n"
+        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^5} |\n".format("ID", "Número do Voo", "Origem", "Destino", "Partida", "Chegada", "Vagas")
+        txt += "|-" + "-" *118 + "-|\n"
+        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^5} |\n".format(voo["id"], voo["numvoo"], voo["origem"], voo["destino"], voo["datapda"], voo["datache"], voo["vagas"])
+        txt += "|-" + "-" *118 + "-|\n"
 
-    txt = "Dados do voo:\n"
-    txt += "|-" + "-" *80 + "-|\n"
-    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^10} | {:^10} | {:^5} |\n".format("ID", "Número do Voo", "Origem", "Destino", "Partida", "Chegada", "Vagas")
-    txt += "|-" + "-" *80 + "-|\n"
-    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^10} | {:^10} | {:^5} |\n".format(voo["id"], voo["numvoo"], voo["origem"], voo["destino"], voo["datapda"], voo["datache"], voo["vagas"])
-    txt += "|-" + "-" *80 + "-|\n"
-
-    return txt
-
+        return txt
+        
+    return None
 
 def printarPassageiro(bd,idpass):
 
@@ -399,21 +402,9 @@ def printarPassageiro(bd,idpass):
         return txt
     return None
 
-def printarVoo(bd,idvoo):
-
-    voo = getVoo(bd, idvoo)
-
-    txt = "|-" + "-" *123 + "-|\n"
-    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format("ID", "Número do Voo", "Origem", "Destino", "Partida", "Chegada", "Vagas")
-    txt += "|-" + "-" *123 + "-|\n"
-    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format(voo["id"], voo["numvoo"], voo["origem"], voo["destino"], voo["datapda"], voo["datache"], voo["vagas"])
-    txt += "|-" + "-" *123 + "-|\n"
-
-    return txt
 
 
 def printarTabReservas():
-
 
     tabela = {1 : "consultar dados da reserva", 2 : "Adicionar reserva", 3 : "Voltar ao menu principal"}
 
@@ -433,29 +424,47 @@ def printarReserva(bd,idres):
     reserva = getReserva(bd, idres)
 
     if reserva: 
-        txt = "|-" + "-" *123 + "-|\n"
-        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format("ID", "DATA", "STATUS", "ASSENTO", "IDPASS", "IDVOO")
-        txt += "|-" + "-" *123 + "-|\n"
-        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format(reserva["id"], reserva["data"], reserva["status"], reserva["assento"], reserva["idpass"], reserva["idvoo"])
-        txt += "|-" + "-" *123 + "-|\n"
+        txt = "|-" + "-" *110 + "-|\n"
+        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} |\n".format("ID", "DATA", "STATUS", "ASSENTO", "IDPASS", "IDVOO")
+        txt += "|-" + "-" *110 + "-|\n"
+        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} |\n".format(reserva["id"], reserva["data"], reserva["status"], reserva["assento"], reserva["idpass"], reserva["idvoo"])
+        txt += "|-" + "-" *110+ "-|\n"
         return txt
     return None
 
 def printarAssentosVoo(bd, idvoo):
     fileiras = ['A', 'B', 'C', 'D', 'E', 'F']
-    linhas = 15
-    assentos = []
-    txt = "Mapa de assentos do voo:\n \n"
+    linhas = 25
+    txt = "Mapa de assentos do voo (vertical):\n\n"
+
+    txt += "     "  
+    for num in range(1, linhas + 1):
+        txt += f"{num:^5}" 
+    txt += "\n"
+
+
     for fila in fileiras:
-        linha_txt = fila + " | "
+        txt += f"{fila} | "
         for num in range(1, linhas + 1):
-            assento_atual = str(num) + fila
-            linha_txt += "{:^1}{:^2}[ ] ".format(fila, num)
-            if (fila == "C") and num == 15 : #Pondo espaço de corredor no meio
-                linha_txt += "\n                           --------------------Corredor--------------------        \n                           --------------------Corredor--------------------        "  # Espaço extra entre as colunas C e D
-        txt += linha_txt + "\n"
+            txt += f"{'[ ]':^5}"
+        txt += "\n"
+
+        if fila == 'C':
+            txt += "    " + "-" * (5 * linhas + 3) + "\n"
+
     return txt
 
+def printarVoos(bd):
+    txt = "Lista de voos cadastrados:\n"
+    txt += "|-" + "-" *118 + "-|\n"
+    txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^5} |\n".format("ID", "Número do Voo", "Origem", "Destino", "Partida", "Chegada", "Vagas")
+    txt += "|-" + "-" *118 + "-|\n"
+
+    for voo in bd["voos"]:
+        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^5} |\n".format(voo["id"], voo["numvoo"], voo["origem"], voo["destino"], voo["datapda"], voo["datache"], voo["vagas"])
+        txt += "|-" + "-" *118 + "-|\n"
+
+    return txt
 
 
  # ======== Fim das funções de printar funcionalidades do banco de dados ========
