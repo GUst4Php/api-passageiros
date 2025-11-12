@@ -53,6 +53,12 @@ def printarPassageiro(idpass):
 def printarVoo(idvoo):
     return mf.printarVoo(bd, idvoo)
 
+def printarTabReservas():
+    return mf.printarTabReservas()
+
+def printarReserva(idres):
+    return mf.printarReserva(bd,idres)
+
  # ======== Fim das funções da API de reservas ========
 
 
@@ -66,7 +72,7 @@ def main():
     arq_i_voos = "Material para o trabalho avaliação 2/tabvoos.txt"
 
     #configurando o serv
-    server = SimpleXMLRPCServer(("localhost", 8080))
+    server = SimpleXMLRPCServer(("localhost", 8080),allow_none=True)
 
     #Definindo as funções que serão disponibilizadas pelo servidor
     server.register_function(adPassageiro, "adPassageiro")
@@ -86,7 +92,8 @@ def main():
     server.register_function(salva_bd, "salvar_db")
     server.register_function(printarPassageiro, "printarPassageiro")
     server.register_function(printarVoo, "printarVoo")
-
+    server.register_function(printarTabReservas, "printarTabReservas")
+    server.register_function(printarReserva, "printarReserva")
     
     print("Servidor aguardando requisições...")
 

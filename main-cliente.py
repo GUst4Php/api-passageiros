@@ -2,7 +2,7 @@ from xmlrpc.client import ServerProxy
 
 def main():
 
-    serv_api = ServerProxy("http://localhost:8080/", allow_none=False)
+    serv_api = ServerProxy("http://localhost:8080/", allow_none=True)
 
     print("BEM VINDOS AO SISTEMA DE RESERVAS DE VOOS DA GUSTA AIRLINES")
     print("")
@@ -30,7 +30,26 @@ def main():
         print("")
 
         if categoria == 1: #atividades relacionadas a reservas
-            return None
+            print("--Atividades relacionadas a reservas: --")
+            print("")
+            print(serv_api.printarTabReservas())
+            print("")
+            servicos = int(input("Digite o número do serviço que deseja realizar: "))
+            print("")
+
+            if servicos == 1:
+                resposta = serv_api.getReserva(str(input("Digite o ID da reserva que deseja consultar: ")))
+                if resposta != None:
+                    print("")
+                    print("--Reserva existente--")
+                    print("")
+                else:
+                    print("")
+                    print("--Reserva não existente--")
+                    print("")
+            if servicos == 2:
+                
+
         
 
         
@@ -42,17 +61,7 @@ def main():
             servicos = int(input("Digite o número do serviço que deseja realizar: "))
             print("")
 
-            if servicos == 1: #verificar se passageiro existe
-                resposta = serv_api.passExiste(str(input("Digite o ID do passageiro que deseja verificar: ")))
-                print("")
-                if resposta:
-                    print("--O passageiro existe no sistema.--")
-                    print("")
-                else:
-                    print("--O passageiro não existe no sistema.--")
-                    print("")
-                
-            if servicos == 2: #consultar passageiro
+            if servicos == 1:   #consultar passageiro
                 resposta = serv_api.printarPassageiro(str(input("Digite o ID do passageiro que deseja consultar: ")))
                 if resposta != None:
                     print("")
@@ -63,7 +72,7 @@ def main():
                     print("--Passageiro não encontrado. Verifique o ID e tente novamente.--")
                     print("")
 
-            if servicos == 3: #adicionar passageiro
+            if servicos == 2: #adicionar passageiro
                 print("")
                 resposta = serv_api.adPassageiro(str(input("Digite o ID do passageiro: ")), str(input("Digite o nome do passageiro: ")), str(input("Digite o email do passageiro: ")), str(input("Digite o telefone do passageiro: ")))
                 print("")
@@ -73,12 +82,12 @@ def main():
                 else:
                     print("--Erro ao adicionar passageiro. Verifique os dados e tente novamente.--")
 
-            if servicos == 4: #printar tabela de passageiros
+            if servicos == 3: #printar tabela de passageiros
                 print("")
                 print(serv_api.printarPassageiros())
                 print("")
 
-            if servicos == 5: #sair
+            if servicos == 4: #sair
                 print("--Encerrando atividades relacionadas a passageiros.--")
                 continue
 
@@ -134,14 +143,11 @@ def main():
             print("")
             continue
             
-            
-
 
         if categoria == 5:
+            serv_api.salvar_db()
             break
 
-
-            
 
 if __name__ == "__main__":
     main()
