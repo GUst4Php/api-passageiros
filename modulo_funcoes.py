@@ -1,4 +1,5 @@
 import json
+import random
 
 """Esta função tem como objetivo ler 3 arquivos referentes a passageiro, 
 reservas e voos, ela retorna uma lista de dicionarios, que serão utilizados pela função 
@@ -414,7 +415,7 @@ def printarVoo(bd,idvoo):
 def printarTabReservas():
 
 
-    tabela = {1 : "Verificar se a reserva existe", 2 : "consultar dados da reserva", 3 : "Adicionar reserva", 4 : "Voltar ao menu principal"}
+    tabela = {1 : "consultar dados da reserva", 2 : "Adicionar reserva", 3 : "Voltar ao menu principal"}
 
     txt = "Escolha as atividades que deseja executar:\n"
     
@@ -426,7 +427,7 @@ def printarTabReservas():
     return txt
 
 
-def printarReserva(idres):
+def printarReserva(bd,idres):
     txt = ""
 
     reserva = getReserva(bd, idres)
@@ -435,7 +436,26 @@ def printarReserva(idres):
         txt = "|-" + "-" *123 + "-|\n"
         txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format("ID", "DATA", "STATUS", "ASSENTO", "IDPASS", "IDVOO")
         txt += "|-" + "-" *123 + "-|\n"
-        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format(voo["id"], voo["data"], voo["status"], voo["assento"], voo["idpass"], voo["idvoo"])
+        txt += "| {:^10} | {:^15} | {:^15} | {:^15} | {:^20} | {:^20} | {:^10} |\n".format(reserva["id"], reserva["data"], reserva["status"], reserva["assento"], reserva["idpass"], reserva["idvoo"])
         txt += "|-" + "-" *123 + "-|\n"
+        return txt
+    return None
 
+def printarAssentosVoo(bd, idvoo):
+    fileiras = ['A', 'B', 'C', 'D', 'E', 'F']
+    linhas = 15
+    assentos = []
+    txt = "Mapa de assentos do voo:\n \n"
+    for fila in fileiras:
+        linha_txt = fila + " | "
+        for num in range(1, linhas + 1):
+            assento_atual = str(num) + fila
+            linha_txt += "{:^1}{:^2}[ ] ".format(fila, num)
+            if (fila == "C") and num == 15 : #Pondo espaço de corredor no meio
+                linha_txt += "\n                           --------------------Corredor--------------------        \n                           --------------------Corredor--------------------        "  # Espaço extra entre as colunas C e D
+        txt += linha_txt + "\n"
     return txt
+
+
+
+ # ======== Fim das funções de printar funcionalidades do banco de dados ========

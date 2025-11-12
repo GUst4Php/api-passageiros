@@ -38,21 +38,21 @@ def main():
             print("")
 
             if servicos == 1:
-                resposta = serv_api.getReserva(str(input("Digite o ID da reserva que deseja consultar: ")))
+                resposta = serv_api.printarReserva(str(input("Digite o ID da reserva que deseja consultar: ")))
                 if resposta != None:
                     print("")
-                    print("--Reserva existente--")
+                    print(resposta)
                     print("")
                 else:
                     print("")
                     print("--Reserva não existente--")
                     print("")
             if servicos == 2:
-                
-
-        
-
-        
+                print("")
+                print(serv_api.printarAssentosVoo(str(input("Digite o ID do voo para o qual deseja fazer a reserva: "))))
+                print("")
+                resposta = serv_api.adReserva(str(input("Digite o ID da reserva: ")), str(input("Data e Hora de Embarque: ")), str(input("Status da Reserva: ")), str(input("Digite o assento desejado (Exemplo: 12A): ")),str(input("Digite o ID do passageiro")), str(input("Digite o ID do voo: ")))
+                print("")
         if categoria == 2: #atividades relacionadas a passageiros
             print("--Atividades relacionadas a passageiros: --")
             print("")

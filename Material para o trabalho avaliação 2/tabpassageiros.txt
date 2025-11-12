@@ -1,34 +1,5 @@
-{
-    "passageiros": [
-        {
-            "id": "1",
-            "nome": "João Silva",
-            "email": "joao.silva@example.com",
-            "tel": "+55 11 91234-5678"
-        },
-        {
-            "id": "2",
-            "nome": "Maria Souza",
-            "email": "maria.souza@example.com",
-            "tel": "+55 21 98765-4321"
-        },
-        {
-            "id": "3",
-            "nome": "Carlos Pereira",
-            "email": "carlos.pereira@example.com",
-            "tel": "+55 31 99876-5432"
-        },
-        {
-            "id": "4",
-            "nome": "Ana Oliveira",
-            "email": "ana.oliveira@example.com",
-            "tel": "+55 41 98765-1234"
-        },
-        {
-            "id": "5",
-            "nome": "Pedro Lima",
-            "email": "pedro.lima@example.com",
-            "tel": "+55 51 91234-8765"
-        }
-    ]
-}
+1,João Silva,joao.silva@example.com,+55 11 91234-5678
+2,Maria Souza,maria.souza@example.com,+55 21 98765-4321
+3,Carlos Pereira,carlos.pereira@example.com,+55 31 99876-5432
+4,Ana Oliveira,ana.oliveira@example.com,+55 41 98765-1234
+5,Pedro Lima,pedro.lima@example.com,+55 51 91234-8765

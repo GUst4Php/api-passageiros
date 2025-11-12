@@ -59,6 +59,9 @@ def printarTabReservas():
 def printarReserva(idres):
     return mf.printarReserva(bd,idres)
 
+def printarAssentosVoo(idvoo):
+    return mf.printarAssentosVoo(bd, idvoo)
+
  # ======== Fim das funções da API de reservas ========
 
 
@@ -94,6 +97,7 @@ def main():
     server.register_function(printarVoo, "printarVoo")
     server.register_function(printarTabReservas, "printarTabReservas")
     server.register_function(printarReserva, "printarReserva")
+    server.register_function(printarAssentosVoo, "printarAssentosVoo")
     
     print("Servidor aguardando requisições...")
 
